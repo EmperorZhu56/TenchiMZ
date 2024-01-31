@@ -468,9 +468,9 @@ Window_Base.prototype.drawFace = function(
     const sh = Math.min(height, ph);
     const dx = Math.floor(x + Math.max(width - pw, 0) / 2);
     const dy = Math.floor(y + Math.max(height - ph, 0) / 2);
-    const sx = (faceIndex % 4) * pw + (pw - sw) / 2;
-    const sy = Math.floor(faceIndex / 4) * ph + (ph - sh) / 2;
-    this.contents.blt(bitmap, sx, sy, sw, sh, dx, dy);
+    const sx = 0;
+    const sy = 0;
+    this.contents.blt(bitmap, 0, 0, sw, sh, dx + 2, dy + 2,sw - 4,sh - 4);
 };
 
 // prettier-ignore
@@ -1961,7 +1961,7 @@ Window_MenuStatus.prototype.maxItems = function () {
 }
 
 Window_MenuStatus.prototype.numVisibleRows = function () {
-  return 4
+  return 7
 }
 
 Window_MenuStatus.prototype.itemHeight = function () {
