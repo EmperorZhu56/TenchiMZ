@@ -455,23 +455,40 @@ Window_Base.prototype.drawIcon = function (iconIndex, x, y) {
   this.contents.blt(bitmap, sx, sy, pw, ph, x, y)
 }
 
-// prettier-ignore
-Window_Base.prototype.drawFace = function(
-    faceName, faceIndex, x, y, width, height
+// 描绘头像
+Window_Base.prototype.drawFace = function (
+  faceName,
+  faceIndex,
+  x,
+  y,
+  width,
+  height,
+  rWidth,
+  rHeight
 ) {
-    width = width || ImageManager.faceWidth;
-    height = height || ImageManager.faceHeight;
-    const bitmap = ImageManager.loadFace(faceName);
-    const pw = ImageManager.faceWidth;
-    const ph = ImageManager.faceHeight;
-    const sw = Math.min(width, pw);
-    const sh = Math.min(height, ph);
-    const dx = Math.floor(x + Math.max(width - pw, 0) / 2);
-    const dy = Math.floor(y + Math.max(height - ph, 0) / 2);
-    const sx = 0;
-    const sy = 0;
-    this.contents.blt(bitmap, 0, 0, sw, sh, dx + 2, dy + 2,sw - 4,sh - 4);
-};
+  width = width || ImageManager.faceWidth
+  height = height || ImageManager.faceHeight
+  const bitmap = ImageManager.loadFace(faceName)
+  const pw = ImageManager.faceWidth
+  const ph = ImageManager.faceHeight
+  const sw = Math.min(width, pw)
+  const sh = Math.min(height, ph)
+  const dx = Math.floor(x + Math.max(width - pw, 0) / 2)
+  const dy = Math.floor(y + Math.max(height - ph, 0) / 2)
+  const sx = 0
+  const sy = 0
+  this.contents.blt(
+    bitmap,
+    0,
+    0,
+    sw,
+    sh,
+    dx + 2,
+    dy + 2,
+    rWidth || sw - 4,
+    rHeight || sh - 4
+  )
+}
 
 // prettier-ignore
 Window_Base.prototype.drawCharacter = function(
@@ -1374,8 +1391,8 @@ Window_Selectable.prototype.clearItem = function (index) {
 }
 
 Window_Selectable.prototype.drawItemBackground = function (index) {
-  const rect = this.itemRect(index)
-  this.drawBackgroundRect(rect)
+  // const rect = this.itemRect(index)
+  // this.drawBackgroundRect(rect)
 }
 
 Window_Selectable.prototype.drawBackgroundRect = function (rect) {
@@ -4795,7 +4812,7 @@ Window_Message.prototype.initMembers = function () {
   this._faceBitmap = null
   this._textState = null
   this._goldWindow = null
-  this._nameBoxWindow = null
+  // this._nameBoxWindow = null
   this._choiceListWindow = null
   this._numberInputWindow = null
   this._eventItemWindow = null
@@ -4805,10 +4822,10 @@ Window_Message.prototype.initMembers = function () {
 Window_Message.prototype.setGoldWindow = function (goldWindow) {
   this._goldWindow = goldWindow
 }
-
-Window_Message.prototype.setNameBoxWindow = function (nameBoxWindow) {
-  this._nameBoxWindow = nameBoxWindow
-}
+// 名称框
+// Window_Message.prototype.setNameBoxWindow = function (nameBoxWindow) {
+//   this._nameBoxWindow = nameBoxWindow
+// }
 
 Window_Message.prototype.setChoiceListWindow = function (choiceListWindow) {
   this._choiceListWindow = choiceListWindow
@@ -4831,7 +4848,7 @@ Window_Message.prototype.clearFlags = function () {
 Window_Message.prototype.update = function () {
   this.checkToNotClose()
   Window_Base.prototype.update.call(this)
-  this.synchronizeNameBox()
+  // this.synchronizeNameBox()
   while (!this.isOpening() && !this.isClosing()) {
     if (this.updateWait()) {
       return
@@ -4856,9 +4873,9 @@ Window_Message.prototype.checkToNotClose = function () {
   }
 }
 
-Window_Message.prototype.synchronizeNameBox = function () {
-  this._nameBoxWindow.openness = this.openness
-}
+// Window_Message.prototype.synchronizeNameBox = function () {
+//   this._nameBoxWindow.openness = this.openness
+// }
 
 Window_Message.prototype.canStart = function () {
   return $gameMessage.hasText() && !$gameMessage.scrollMode()
@@ -4874,7 +4891,7 @@ Window_Message.prototype.startMessage = function () {
   this.updatePlacement()
   this.updateBackground()
   this.open()
-  this._nameBoxWindow.start()
+  // this._nameBoxWindow.start()
 }
 
 Window_Message.prototype.newLineX = function (textState) {
@@ -4918,6 +4935,7 @@ Window_Message.prototype.updateLoading = function () {
   if (this._faceBitmap) {
     if (this._faceBitmap.isReady()) {
       this.drawMessageFace()
+      this.drawMessageSpeakerName()
       this._faceBitmap = null
       return false
     } else {
@@ -5061,29 +5079,38 @@ Window_Message.prototype.newPage = function (textState) {
   this.contents.clear()
   this.resetFontSettings()
   this.clearFlags()
-  this.updateSpeakerName()
+  // this.updateSpeakerName()
   this.loadMessageFace()
   textState.x = textState.startX
   textState.y = 0
   textState.height = this.calcTextHeight(textState)
 }
 
-Window_Message.prototype.updateSpeakerName = function () {
-  this._nameBoxWindow.setName($gameMessage.speakerName())
-}
+// Window_Message.prototype.updateSpeakerName = function () {
+//   this._nameBoxWindow.setName($gameMessage.speakerName())
+// }
 
 Window_Message.prototype.loadMessageFace = function () {
   this._faceBitmap = ImageManager.loadFace($gameMessage.faceName())
 }
 
+// 描绘对话框头像
 Window_Message.prototype.drawMessageFace = function () {
   const faceName = $gameMessage.faceName()
   const faceIndex = $gameMessage.faceIndex()
   const rtl = $gameMessage.isRTL()
   const width = ImageManager.faceWidth
-  const height = this.innerHeight
+  const height = ImageManager.faceHeight
   const x = rtl ? this.innerWidth - width - 4 : 4
-  this.drawFace(faceName, faceIndex, x, 0, width, height)
+  this.drawFace(faceName, faceIndex, x + 4, 4, width, height)
+}
+// 描绘对话框名称
+Window_Message.prototype.drawMessageSpeakerName = function () {
+  const rtl = $gameMessage.isRTL()
+  const width = ImageManager.faceWidth
+  const height = ImageManager.faceHeight
+  const x = rtl ? this.innerWidth - width - 4 : 4
+  this.drawText($gameMessage.speakerName(), x, height + 8, height, 'center')
 }
 
 Window_Message.prototype.processControlCharacter = function (textState, c) {

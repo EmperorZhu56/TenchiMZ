@@ -360,7 +360,7 @@ Sprite_Character.prototype.characterPatternY = function () {
   return (this._character.direction() - 2) / 2
 }
 
-// 行走图的宽度吧
+// 行走图的宽度
 Sprite_Character.prototype.patternWidth = function () {
   if (this._tileId > 0) {
     return $gameMap.tileWidth()

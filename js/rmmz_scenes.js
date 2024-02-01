@@ -533,7 +533,7 @@ Scene_Message.prototype.createAllWindows = function () {
   this.createMessageWindow()
   this.createScrollTextWindow()
   this.createGoldWindow()
-  this.createNameBoxWindow()
+  // this.createNameBoxWindow()
   this.createChoiceListWindow()
   this.createNumberInputWindow()
   this.createEventItemWindow()
@@ -583,10 +583,10 @@ Scene_Message.prototype.goldWindowRect = function () {
   return new Rectangle(wx, wy, ww, wh)
 }
 
-Scene_Message.prototype.createNameBoxWindow = function () {
-  this._nameBoxWindow = new Window_NameBox()
-  this.addWindow(this._nameBoxWindow)
-}
+// Scene_Message.prototype.createNameBoxWindow = function () {
+//   this._nameBoxWindow = new Window_NameBox()
+//   this.addWindow(this._nameBoxWindow)
+// }
 
 Scene_Message.prototype.createChoiceListWindow = function () {
   this._choiceListWindow = new Window_ChoiceList()
@@ -615,11 +615,11 @@ Scene_Message.prototype.eventItemWindowRect = function () {
 Scene_Message.prototype.associateWindows = function () {
   const messageWindow = this._messageWindow
   messageWindow.setGoldWindow(this._goldWindow)
-  messageWindow.setNameBoxWindow(this._nameBoxWindow)
+  // messageWindow.setNameBoxWindow(this._nameBoxWindow)
   messageWindow.setChoiceListWindow(this._choiceListWindow)
   messageWindow.setNumberInputWindow(this._numberInputWindow)
   messageWindow.setEventItemWindow(this._eventItemWindow)
-  this._nameBoxWindow.setMessageWindow(messageWindow)
+  // this._nameBoxWindow.setMessageWindow(messageWindow)
   this._choiceListWindow.setMessageWindow(messageWindow)
   this._numberInputWindow.setMessageWindow(messageWindow)
   this._eventItemWindow.setMessageWindow(messageWindow)

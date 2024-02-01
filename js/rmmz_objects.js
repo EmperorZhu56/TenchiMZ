@@ -5387,8 +5387,13 @@ Game_Party.prototype.battleMembers = function () {
     .filter((actor) => actor.isAppeared())
 }
 
-// 最大队伍跟随
+// 最大战斗人数
 Game_Party.prototype.maxBattleMembers = function () {
+  return 5
+}
+
+// 最大队伍跟随
+Game_Party.prototype.maxFollowers = function () {
   return 3
 }
 
@@ -8286,6 +8291,7 @@ Game_Player.prototype.update = function (sceneActive) {
   const lastScrolledX = this.scrolledX()
   const lastScrolledY = this.scrolledY()
   const wasMoving = this.isMoving()
+  this.setStepAnime(true)
   this.updateDashing()
   if (sceneActive) {
     this.moveByInput()
@@ -8713,7 +8719,7 @@ Game_Followers.prototype.initialize = function () {
 
 Game_Followers.prototype.setup = function () {
   this._data = []
-  for (let i = 1; i < $gameParty.maxBattleMembers(); i++) {
+  for (let i = 1; i < $gameParty.maxFollowers(); i++) {
     this._data.push(new Game_Follower(i))
   }
 }
