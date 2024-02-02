@@ -968,7 +968,7 @@ ImageManager.isObjectCharacter = function (filename) {
 
 ImageManager.isBigCharacter = function (filename) {
   const sign = filename.match(/^[!$]+/)
-  return sign && sign[0].includes('$')
+  return !sign
 }
 
 ImageManager.isZeroParallax = function (filename) {
