@@ -853,6 +853,9 @@ ImageManager.iconHeight = 48
 ImageManager.faceWidth = 96
 ImageManager.faceHeight = 96
 
+ImageManager.messageFaceWidth = 144
+ImageManager.messageFaceHeight = 144
+
 ImageManager._cache = {}
 ImageManager._system = {}
 ImageManager._emptyBitmap = new Bitmap(1, 1)

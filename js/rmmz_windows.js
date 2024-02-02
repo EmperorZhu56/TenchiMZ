@@ -477,17 +477,7 @@ Window_Base.prototype.drawFace = function (
   const dy = Math.floor(y + Math.max(height - ph, 0) / 2)
   const sx = 0
   const sy = 0
-  this.contents.blt(
-    bitmap,
-    0,
-    0,
-    sw,
-    sh,
-    dx + 2,
-    dy + 2,
-    rWidth || sw - 4,
-    rHeight || sh - 4
-  )
+  this.contents.blt(bitmap, 0, 0, sw, sh, dx, dy, rWidth || sw, rHeight || sh)
 }
 
 // prettier-ignore
@@ -4887,6 +4877,7 @@ Window_Message.prototype.startMessage = function () {
   textState.x = this.newLineX(textState)
   textState.startX = textState.x
   this._textState = textState
+  this.changeTextColor(ColorManager.normalColor())
   this.newPage(this._textState)
   this.updatePlacement()
   this.updateBackground()
@@ -4896,10 +4887,11 @@ Window_Message.prototype.startMessage = function () {
 
 Window_Message.prototype.newLineX = function (textState) {
   const faceExists = $gameMessage.faceName() !== ''
-  const faceWidth = ImageManager.faceWidth
+  const faceWidth = ImageManager.messageFaceWidth
+  const padding = (this.innerHeight - faceWidth) / 2
   const spacing = 20
-  const margin = faceExists ? faceWidth + spacing : 4
-  return textState.rtl ? this.innerWidth - margin : margin
+  const margin = faceExists ? faceWidth + padding : 4
+  return (this.innerWidth - 552) / 2
 }
 
 Window_Message.prototype.updatePlacement = function () {
@@ -4974,6 +4966,7 @@ Window_Message.prototype.isAnySubWindowActive = function () {
 Window_Message.prototype.updateMessage = function () {
   const textState = this._textState
   if (textState) {
+    this.changeTextColor(ColorManager.normalColor())
     while (!this.isEndOfText(textState)) {
       if (this.needsNewPage(textState)) {
         this.newPage(textState)
@@ -5081,8 +5074,9 @@ Window_Message.prototype.newPage = function (textState) {
   this.clearFlags()
   // this.updateSpeakerName()
   this.loadMessageFace()
+
   textState.x = textState.startX
-  textState.y = 0
+  textState.y = 36
   textState.height = this.calcTextHeight(textState)
 }
 
@@ -5096,21 +5090,34 @@ Window_Message.prototype.loadMessageFace = function () {
 
 // 描绘对话框头像
 Window_Message.prototype.drawMessageFace = function () {
+  const isRight =
+    $gameMessage.speakerName().indexOf('R') ===
+    $gameMessage.speakerName().length - 1
   const faceName = $gameMessage.faceName()
   const faceIndex = $gameMessage.faceIndex()
   const rtl = $gameMessage.isRTL()
-  const width = ImageManager.faceWidth
-  const height = ImageManager.faceHeight
-  const x = rtl ? this.innerWidth - width - 4 : 4
-  this.drawFace(faceName, faceIndex, x + 4, 4, width, height)
+  const width = ImageManager.messageFaceWidth
+  const height = ImageManager.messageFaceHeight
+  const padding = (this.innerHeight - height) / 2
+  const x = isRight ? this.innerWidth - padding - width : padding
+
+  this.drawFace(faceName, faceIndex, x, padding, null, null, width, height)
 }
 // 描绘对话框名称
 Window_Message.prototype.drawMessageSpeakerName = function () {
   const rtl = $gameMessage.isRTL()
-  const width = ImageManager.faceWidth
-  const height = ImageManager.faceHeight
+  const width = ImageManager.messageFaceWidth
+  const height = ImageManager.messageFaceHeight
   const x = rtl ? this.innerWidth - width - 4 : 4
-  this.drawText($gameMessage.speakerName(), x, height + 8, height, 'center')
+  const padding = (this.innerHeight - height) / 2
+  this.changeTextColor(ColorManager.systemColor())
+  this.drawText(
+    $gameMessage.speakerName().replace('R', ''),
+    (this.innerWidth - 552) / 2,
+    0,
+    width,
+    'left'
+  )
 }
 
 Window_Message.prototype.processControlCharacter = function (textState, c) {
