@@ -1816,10 +1816,10 @@ Window_StatusBase.prototype.drawActorSimpleStatus = function (actor, x, y) {
   const lineHeight = this.lineHeight()
   const x2 = x + 180
   this.drawActorName(actor, x, y)
-  this.drawActorLevel(actor, x, y + lineHeight * 1)
+  // this.drawActorLevel(actor, x, y + lineHeight * 1)
   this.drawActorIcons(actor, x, y + lineHeight * 2)
-  this.drawActorClass(actor, x2, y)
-  this.placeBasicGauges(actor, x2, y + lineHeight)
+  // this.drawActorClass(actor, x2, y)
+  this.placeBasicGauges(actor, x2, y + 4)
 }
 
 Window_StatusBase.prototype.actorSlotName = function (actor, index) {
@@ -2828,15 +2828,25 @@ Window_Status.prototype.setActor = function (actor) {
 Window_Status.prototype.refresh = function () {
   Window_StatusBase.prototype.refresh.call(this)
   if (this._actor) {
-    this.drawBlock1()
+    const y = this.block1Y()
+    this.drawActorFace(this._actor, 12, 12)
+    this.drawActorName(this._actor, 12, y + 200, 168)
+    this.drawActorNickname(this._actor, 96, y + 200, 168)
+    this.drawText('武', 240, y + this.lineHeight() * 0, 270)
+    this.drawText('智', 240, y + this.lineHeight() * 1, 270)
+    this.drawText('速', 240, y + this.lineHeight() * 2, 270)
+    this.drawText('攻', 240, y + this.lineHeight() * 3, 270)
+    this.drawText('防', 240, y + this.lineHeight() * 4, 270)
+    this.drawText('计', 240, y + this.lineHeight() * 5, 270)
+    // this.drawBlock1()
     this.drawBlock2()
   }
 }
 
 Window_Status.prototype.drawBlock1 = function () {
   const y = this.block1Y()
-  this.drawActorName(this._actor, 6, y, 168)
-  this.drawActorClass(this._actor, 192, y, 168)
+  this.drawActorName(this._actor, 12, y + 200, 168)
+  // this.drawActorClass(this._actor, 192, y, 168)
   this.drawActorNickname(this._actor, 432, y, 270)
 }
 
@@ -2846,9 +2856,9 @@ Window_Status.prototype.block1Y = function () {
 
 Window_Status.prototype.drawBlock2 = function () {
   const y = this.block2Y()
-  this.drawActorFace(this._actor, 12, y)
+  this.drawActorFace(this._actor, 12, 12)
   this.drawBasicInfo(204, y)
-  this.drawExpInfo(456, y)
+  // this.drawExpInfo(456, y)
 }
 
 Window_Status.prototype.block2Y = function () {
@@ -2860,9 +2870,9 @@ Window_Status.prototype.block2Y = function () {
 
 Window_Status.prototype.drawBasicInfo = function (x, y) {
   const lineHeight = this.lineHeight()
-  this.drawActorLevel(this._actor, x, y + lineHeight * 0)
+  // this.drawActorLevel(this._actor, x, y + lineHeight * 0)
   this.drawActorIcons(this._actor, x, y + lineHeight * 1)
-  this.placeBasicGauges(this._actor, x, y + lineHeight * 2)
+  // this.placeBasicGauges(this._actor, x, y + lineHeight * 2)
 }
 
 Window_Status.prototype.drawExpInfo = function (x, y) {
@@ -6076,7 +6086,7 @@ Window_BattleStatus.prototype.extraHeight = function () {
 }
 
 Window_BattleStatus.prototype.maxCols = function () {
-  return 4
+  return 5
 }
 
 Window_BattleStatus.prototype.itemHeight = function () {

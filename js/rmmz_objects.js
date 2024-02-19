@@ -2430,6 +2430,27 @@ Object.defineProperties(Game_BattlerBase.prototype, {
     },
     configurable: true,
   },
+  // 武力
+  str: {
+    get: function () {
+      return 255
+    },
+    configurable: true,
+  },
+  // 智力
+  int: {
+    get: function () {
+      return 255
+    },
+    configurable: true,
+  },
+  // 速度
+  agi: {
+    get: function () {
+      return 255
+    },
+    configurable: true,
+  },
   // ATtacK power
   atk: {
     get: function () {

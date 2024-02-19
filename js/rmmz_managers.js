@@ -848,8 +848,8 @@ function ImageManager() {
   throw new Error('This is a static class')
 }
 
-ImageManager.iconWidth = 48
-ImageManager.iconHeight = 48
+ImageManager.iconWidth = 32
+ImageManager.iconHeight = 32
 ImageManager.faceWidth = 96
 ImageManager.faceHeight = 96
 

@@ -1,6 +1,6 @@
 [
 null,
-{"id":1,"battlerName":"Actor1_1","characterIndex":0,"characterName":"刘备","classId":1,"equips":[2,0,0,3,0],"faceIndex":0,"faceName":"刘备","traits":[],"initialLevel":1,"maxLevel":99,"name":"刘备","nickname":"玄德","note":"","profile":""},
+{"id":1,"battlerName":"Actor1_1","characterIndex":0,"characterName":"刘备","classId":1,"equips":[2,0,0,3,0],"faceIndex":0,"faceName":"刘备","traits":[],"initialLevel":1,"maxLevel":99,"name":"刘备","nickname":"玄德","note":"@param[245,95,25]","profile":""},
 {"id":2,"battlerName":"Actor1_2","characterIndex":0,"characterName":"关羽","classId":1,"equips":[1,0,0,9,0],"faceIndex":1,"faceName":"关羽","traits":[],"initialLevel":1,"maxLevel":99,"name":"关羽","nickname":"云长","note":"","profile":""},
 {"id":3,"battlerName":"Actor1_3","characterIndex":2,"characterName":"张飞","classId":5,"equips":[31,0,65,5,0],"faceIndex":2,"faceName":"张飞","traits":[],"initialLevel":1,"maxLevel":99,"name":"张飞","nickname":"益德","note":"","profile":""},
 {"id":4,"battlerName":"Actor1_4","characterIndex":3,"characterName":"赵云","classId":5,"equips":[31,0,0,5,0],"faceIndex":3,"faceName":"赵云","traits":[],"initialLevel":1,"maxLevel":99,"name":"赵云","nickname":"子龙","note":"","profile":""},
